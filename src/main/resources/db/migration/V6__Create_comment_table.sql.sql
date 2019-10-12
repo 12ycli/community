@@ -1,4 +1,4 @@
-create table comment
+create table COMMENT
 (
     id bigint auto_increment primary key,
     parent_id bigint not null,
