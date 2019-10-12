@@ -1,0 +1,61 @@
+body{
+    background-color: #efefef;
+}
+.main{
+    background-color: white;
+    margin: 30px;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+.media-object{
+    width: 40px;
+    height: 40px;
+}
+.media-body{
+    padding-top: 10px;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.profile.section{
+    margin-top: 15px;
+    color: #2aabd2;
+}
+.jumbotron{
+    margin: 50px;
+}
+.comment{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.comment-btn{
+    margin-bottom: 10px;
+    float: right;
+}
+.comments{
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.comment-sp{
+    margin-top: 0;
+}
+.menu{
+    color: #999;
+    margin-top: 5px;
+}
+.menu. icon{
+    margin-right: 60px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu.icon:hover{
+    color: #499ef3;
+}
+
+
+

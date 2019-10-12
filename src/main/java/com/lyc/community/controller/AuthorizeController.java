@@ -5,9 +5,9 @@ import com.lyc.community.dto.GitHubUser;
 import com.lyc.community.mapper.UserMapper;
 import com.lyc.community.model.User;
 import com.lyc.community.provider.GitHubProvider;
+import com.lyc.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +41,9 @@ public class AuthorizeController {
     @Autowired
     private GitHubProvider gitHubProvider;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/callback")
     public String callback(@RequestParam("code")String code,
                            @RequestParam("state") String state,
@@ -56,14 +59,8 @@ public class AuthorizeController {
         GitHubUser gitHubUser = gitHubProvider.getUser(accessToken);
         if(gitHubUser.getId()!=null){
             // 登陆成功
-            User user = new User();
             String token = UUID.randomUUID().toString();
-            user.setToken(token);
-            user.setName(gitHubUser.getName());
-            user.setAccountId(String.valueOf(gitHubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            userMapper.insert(user);
+            userService.update(gitHubUser, token);
             response.addCookie(new Cookie("token", token));
             request.getSession().setAttribute("user",gitHubUser);
             return "redirect:/";
@@ -72,5 +69,16 @@ public class AuthorizeController {
             System.out.println("登陆失败！");
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                  HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        //去掉cookie
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
